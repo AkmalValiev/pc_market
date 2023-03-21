@@ -53,8 +53,16 @@ public class CategoryService {
         }
         Category category1 = new Category();
         category1.setName(categoryDto.getName());
-        category1.setParentCategory(category);
-        category1.setAttachment(attachment);
+        if (categoryDto.getParenCategoryId()==null){
+            category1.setParentCategory(null);
+        }else {
+            category1.setParentCategory(category);
+        }
+        if (categoryDto.getAttachmentId()==null){
+            category1.setAttachment(null);
+        }else {
+            category1.setAttachment(attachment);
+        }
         category1.setActive(categoryDto.isActive());
         categoryRepository.save(category1);
         return new ApiResponse("Category qo'shildi!", true);

@@ -44,7 +44,7 @@ public class ProductService {
 
         Set<Detail> details = new HashSet<>();
 
-        if (!productDto.getDetailsId().isEmpty()){
+        if (productDto.getDetailsId()!=null){
             Set<Integer> detailsId = productDto.getDetailsId();
             for (Integer integer : detailsId) {
                 Optional<Detail> optionalDetail = detailRepository.findById(integer);
@@ -58,7 +58,11 @@ public class ProductService {
 
         Product product = new Product();
         product.setCategory(category);
-        product.setDetails(details);
+        if (productDto.getDetailsId()==null){
+            product.setDetails(null);
+        }else {
+            product.setDetails(details);
+        }
         product.setDescription(productDto.getDescription());
         product.setGuaranteeYear(productDto.getGuaranteeYear());
         productRepository.save(product);
